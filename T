@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Webhook-discord/refs/heads/main/main-mod-r2lx-wibu-with-webhook.lua"))()
