@@ -1,5 +1,5 @@
 
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhEmTu/Webhook-discord/refs/heads/main/fluent-mod-wibu-final%20.lua"))()
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/r2lx-hub/main-r2lx-ui/refs/heads/main/fluent-mod-wibu-final%20.lua"))()
 
 repeat wait() until game.Players
 repeat wait() until game.Players.LocalPlayer
