@@ -59,7 +59,7 @@ InputService.WindowFocusReleased:Connect(
 local Window = Fluent:CreateWindow({
     Title="R2LX HUB-BloxFruit",
     SubTitle="By Enc Skibidi", 
-    TabWidth=160, 
+    TabWidth=80, 
     Theme="R2LX",
     Acrylic=false,
     Size=UDim2.fromOffset(530, 350), 
