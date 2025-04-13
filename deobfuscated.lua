@@ -67,10 +67,10 @@ local Window = Fluent:CreateWindow({
 })
 local Tabs = {
     Info=Window:AddTab({ Title="Thông Tin" }),
+    Setting=Window:AddTab({ Title="Cài Đặt" }),
     Main=Window:AddTab({ Title="Cày" }),
     Sea=Window:AddTab({ Title="Sự Kiện" }),
     Item=Window:AddTab({ Title="Vật Phẩm" }),
-    Setting=Window:AddTab({ Title="Cài Đặt" }),
     Status=Window:AddTab({ Title="Máy Chủ" }),
     Stats=Window:AddTab({ Title="Chỉ Số" }),
     Player=Window:AddTab({ Title="Người Chơi" }),
@@ -2471,7 +2471,7 @@ spawn(function()
     end
 end)
 
-local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
+local DropdownSelectWeapon = Tabs.Setting:AddDropdown("DropdownSelectWeapon", {
     Title = "Vũ Khí",
     Description = "",
     Values = {'Melee', 'Sword', 'Blox Fruit'},
