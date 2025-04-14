@@ -6729,6 +6729,86 @@ function EffectsDisabler()
     end
 end
 
+Tabs.Setting:AddButton({
+    Title = "Unlock FPS",
+    Description = "",
+    Callback = function()
+    if setfpscap then
+        setfpscap(9999999)
+    else
+        warn("setfpscap không được hỗ trợ bởi executor hiện tại.")
+    end
+end
+})
+Tabs.Status:AddButton({
+    Title="Reduce Cpu",
+    Description="",
+Callback = function()
+    local success, err = pcall(function()
+        for i,v in pairs(game.Workspace.Map:GetDescendants()) do
+            if table.find({"Tavern", "SmileFactory", "Tree", "Rocks", "PartHouse", "Hotel", "WallPiece", "MiddlePillars", "Cloud", "PluginGrass", "BigHouse", "SmallHouse", "Detail"}, v.Name) then
+                v:Destroy()
+            end
+        end
+        if game.ReplicatedStorage:FindFirstChild("Unloaded") then
+            for i,v in pairs(game.ReplicatedStorage.Unloaded:GetDescendants()) do
+                if table.find({"Tavern", "SmileFactory", "Tree", "Rocks", "PartHouse", "Hotel", "WallPiece", "MiddlePillars", "Cloud", "PluginGrass", "BigHouse", "SmallHouse", "Detail"}, v.Name) then
+                    v:Destroy()
+                end
+            end
+        end
+        for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if v:IsA("Accessory") or v.Name == "Pants" or v.Name == "Shirt" then
+                v:Destroy()
+            end
+        end
+        local decalsyeeted = true
+        local g = game
+        local w = g.Workspace
+        local l = g.Lighting
+        local t = w.Terrain
+        t.WaterWaveSize = 0
+        t.WaterWaveSpeed = 0
+        t.WaterReflectance = 0
+        t.WaterTransparency = 0
+        l.GlobalShadows = false
+        l.FogEnd = 9e9
+        l.Brightness = 0
+        if settings().Rendering then
+            pcall(function()
+                settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+            end)
+        end
+        for i, v in pairs(g:GetDescendants()) do
+            if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+                v.Material = Enum.Material.Plastic
+                v.Reflectance = 0
+            elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
+                v.Transparency = 1
+            elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Lifetime = NumberRange.new(0)
+            elseif v:IsA("Explosion") then
+                v.BlastPressure = 1
+                v.BlastRadius = 1
+            elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+                v.Enabled = false
+            elseif v:IsA("MeshPart") then
+                v.Material = Enum.Material.Plastic
+                v.Reflectance = 0
+                v.TextureID = ""
+            end
+        end
+        for i, e in pairs(l:GetChildren()) do
+            if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+                e.Enabled = false
+            end
+        end
+    end)
+    if not success then
+        warn("Lỗi trong Reduce CPU: ", err)
+    end
+end
+})
 -- Fix 100%
 Tabs.Setting:AddButton({
     Title = "Fix Lag 100%",
