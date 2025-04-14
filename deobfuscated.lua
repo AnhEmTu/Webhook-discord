@@ -6771,7 +6771,7 @@ Tabs.Setting:AddButton({
     Callback = function()
         setfpscap(9999999)
     end
-  )}
+    })
         
 Tabs.Status:AddButton({
         Title="Reduce Cpu",
@@ -6829,7 +6829,8 @@ Tabs.Status:AddButton({
 			e.Enabled = false
 		end
 	end
-    end)}
+    end
+        })
       
 -- End
 
