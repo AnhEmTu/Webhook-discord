@@ -60,17 +60,17 @@ local Window = Fluent:CreateWindow({
     Title="R2LX HUB-BloxFruit",
     SubTitle="By Enc Skibidi", 
     TabWidth=160, 
-    Theme="lua",
+    Theme="R2LX",
     Acrylic=false,
     Size=UDim2.fromOffset(430, 320), 
     MinimizeKey=Enum.KeyCode.End
 })
 local Tabs = {
     Info=Window:AddTab({ Title="Thông Tin" }),
-    Setting=Window:AddTab({ Title="Cài Đặt" }),
     Main=Window:AddTab({ Title="Cày" }),
     Sea=Window:AddTab({ Title="Sự Kiện" }),
     Item=Window:AddTab({ Title="Vật Phẩm" }),
+    Setting=Window:AddTab({ Title="Cài Đặt" }),
     Status=Window:AddTab({ Title="Máy Chủ" }),
     Stats=Window:AddTab({ Title="Chỉ Số" }),
     Player=Window:AddTab({ Title="Người Chơi" }),
@@ -2471,7 +2471,7 @@ spawn(function()
     end
 end)
 
-local DropdownSelectWeapon = Tabs.Setting:AddDropdown("DropdownSelectWeapon", {
+local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
     Title = "Vũ Khí",
     Description = "",
     Values = {'Melee', 'Sword', 'Blox Fruit'},
@@ -6765,6 +6765,72 @@ function DisableTransparency()
     end)
 end
 
+Tabs.Setting:AddButton({
+    Title = "Unlock FPS",
+    Description = "",
+    Callback = function()
+        setfpscap(9999999)
+    end
+  )}
+        
+Tabs.Status:AddButton({
+        Title="Reduce Cpu",
+        Description="",
+        Callback=function()
+            for i,v in pairs(game.Workspace.Map:GetDescendants()) do
+		if v.Name == "Tavern" or v.Name == "SmileFactory" or v.Name == "Tree" or v.Name == "Rocks" or v.Name == "PartHouse" or v.Name == "Hotel" or v.Name == "WallPiece" or v.Name == "MiddlePillars" or v.Name == "Cloud" or v.Name == "PluginGrass" or v.Name == "BigHouse" or v.Name == "SmallHouse" or v.Name == "Detail" then
+			v:Destroy()
+		end
+	end 
+	for i,v in pairs(game.ReplicatedStorage.Unloaded:GetDescendants()) do
+		if v.Name == "Tavern" or v.Name == "SmileFactory" or v.Name == "Tree" or v.Name == "Rocks" or v.Name == "PartHouse" or v.Name == "Hotel" or v.Name == "WallPiece" or v.Name == "MiddlePillars" or v.Name == "Cloud" or v.Name == "PluginGrass" or v.Name == "BigHouse" or v.Name == "SmallHouse" or v.Name == "Detail" then
+			v:Destroy()
+		end
+	end
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+		if v:IsA("Accessory") or v.Name == "Pants" or v.Name == "Shirt" then
+			v:Destroy()
+		end
+	end
+	local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+	local g = game
+	local w = g.Workspace
+	local l = g.Lighting
+	local t = w.Terrain
+	t.WaterWaveSize = 0
+	t.WaterWaveSpeed = 0
+	t.WaterReflectance = 0
+	t.WaterTransparency = 0
+	l.GlobalShadows = false
+	l.FogEnd = 9e9
+	l.Brightness = 0
+	settings().Rendering.QualityLevel = "Level01"
+	for i, v in pairs(g:GetDescendants()) do
+		if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+			v.Material = "Plastic"
+			v.Reflectance = 0
+		elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+			v.Transparency = 1
+		elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+			v.Lifetime = NumberRange.new(0)
+		elseif v:IsA("Explosion") then
+			v.BlastPressure = 1
+			v.BlastRadius = 1
+		elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+			v.Enabled = false
+		elseif v:IsA("MeshPart") then
+			v.Material = "Plastic"
+			v.Reflectance = 0
+			v.TextureID = 10385902758728957
+		end
+	end
+	for i, e in pairs(l:GetChildren()) do
+		if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+			e.Enabled = false
+		end
+	end
+    end)}
+      
 -- End
 
 local ToggleBringMob = Tabs.Setting:AddToggle("ToggleBringMob", {Title="Gom Quái",Description="", Default=true})
