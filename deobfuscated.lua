@@ -2269,33 +2269,6 @@ end
         game:GetService'VirtualUser':CaptureController()
         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
     end]]
-
-    function FixxLag()
-    -- Thay đổi độ trong suốt của tất cả các đối tượng trong workspace
-    for _, v in next, workspace:GetDescendants() do
-        pcall(function()
-            v.Transparency = 1
-        end)
-    end
-
-    -- Thay đổi độ trong suốt của các đối tượng nil instances
-    for _, v in next, getnilinstances() do
-        pcall(function()
-            v.Transparency = 1
-            for _, v1 in next, v:GetDescendants() do
-                v1.Transparency = 1
-            end
-        end)
-    end
-
-    -- Giám sát các phần tử mới được thêm vào workspace
-    local a = workspace
-    a.DescendantAdded:Connect(function(v)
-        pcall(function()
-            v.Transparency = 1
-        end)
-    end)
-end
       
 -- End
     function AutoHaki()
@@ -9619,9 +9592,9 @@ Tabs.Misc:AddButton({
         NoFog()
     end
 })
-local ToggleAntiBand = Tabs.Misc:AddToggle("ToggleAntiBand", {
+llocal ToggleAntiBand = Tabs.Misc:AddToggle("ToggleAntiBand", {
     Title = "Chống Band + Chống AFK",
-    Description = "Tự động né admin/mod + tránh bị kick khi AFK",
+    Description = "Tự né admin, tránh kick AFK và giảm lag tối đa",
     Default = true
 })
 
@@ -9632,8 +9605,44 @@ end)
 local dangerousIDs = {17884881, 120173604, 912348}
 local VirtualUser = game:GetService("VirtualUser")
 
+function DisableTransparency()
+    -- Ẩn toàn bộ object trong workspace
+    for _, v in next, workspace:GetDescendants() do
+        pcall(function()
+            if v:IsA("BasePart") or v:IsA("Decal") then
+                v.Transparency = 1
+                if v:FindFirstChild("Texture") then
+                    v.Texture = ""
+                end
+            end
+        end)
+    end
+
+    -- Ẩn các đối tượng ngoài workspace (nếu có)
+    for _, v in next, getnilinstances() do
+        pcall(function()
+            if v:IsA("BasePart") then
+                v.Transparency = 1
+            end
+            for _, v1 in next, v:GetDescendants() do
+                if v1:IsA("BasePart") then
+                    v1.Transparency = 1
+                end
+            end
+        end)
+    end
+
+    -- Theo dõi các object mới
+    workspace.DescendantAdded:Connect(function(v)
+        pcall(function()
+            if v:IsA("BasePart") then
+                v.Transparency = 1
+            end
+        end)
+    end)
+end
+
 spawn(function()
-          FixxLag()
     while task.wait(2) do
         if _G.AntiBand then
             -- Chống AFK
@@ -9643,12 +9652,15 @@ spawn(function()
                 VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
             end)
 
-            -- Kiểm tra người khả nghi
+            -- Né admin/mod
             for _, player in pairs(game:GetService("Players"):GetPlayers()) do
                 if table.find(dangerousIDs, player.UserId) then
-                    Hop() -- Hàm tự động chuyển server
+                    Hop()
                 end
             end
+
+            -- Tối ưu hiệu năng (giảm lag)
+            DisableTransparency()
         end
     end
 end)
