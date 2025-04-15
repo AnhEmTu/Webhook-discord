@@ -1,5 +1,4 @@
 
----Tab
 local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/r2lx-hub/main-r2lx-ui/refs/heads/main/fluent-mod-wibu%20.lua"))()
 
 repeat wait() until game.Players
@@ -2069,6 +2068,19 @@ spawn(function()
       end)
     end
     end)
+local Plr = game:GetService("Players").LocalPlayer
+local Mouse = Plr:GetMouse()
+Mouse.Button1Down:connect(function()
+	if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
+		return
+	end
+	if not Mouse.Target then
+		return
+	end
+	if CTRL then
+		Plr.Character:MoveTo(Mouse.Hit.p)
+	end
+end)
 function CheckMaterial(matname)
 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
 if type(v)=="table" then
@@ -2259,7 +2271,7 @@ end
     
       function Click()
         game:GetService'VirtualUser':CaptureController()
-        game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
     end
 
   --[[  function Click()
@@ -3764,23 +3776,6 @@ spawn(function()
     end
     end)
 end
-
-local Toggle2xBone = Tabs.Main:AddToggle("Toggle2xBone", {Title="Random Xương",Description="", Default=false })
-Toggle2xBone:OnChanged(function(Value)  
-        AutoBuyEXPBone=Value
-end)
-Options.Toggle2xBone:SetValue(false)
-spawn(function()
-    pcall(function()
-        while wait(.1) do
-            if AutoBuyEXPBone then
-                if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Level.Exp.Text, "2x") then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
-                end
-            end
-        end
-    end)
-end)
 if Sea3 then
 local MiscFarm = Tabs.Main:AddSection("Tư Lệnh Bánh")
 local Mob_Kill_Cake_Prince = Tabs.Main:AddParagraph({
@@ -5603,50 +5598,6 @@ spawn(function()
         end)
     end
 end)
-local ToggleAutoObservation = Tabs.Item:AddToggle("ToggleAutoObservation", {
-    Title="Auto Farm Observation Haki",
-    Description="",
-    Default=false
-})
-ToggleAutoObservation:OnChanged(function(Value)
-    AutoFarmObservation=Value
-end)
-Options.ToggleAutoObservation:SetValue(false)
-spawn(function()
-        while task.wait() do
-            pcall(function()
-                if _G.AutoObservationv2 then
-                    if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk2","Start") == 0 then
-                        Tween2( CFrame.new(-10920.125, 624.20275878906, -10266.995117188))
-                        wait(1.1)
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk2","Buy")
-                    else
-                        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Fruit Bowl") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Fruit Bowl") then
-                            Tween2( CFrame.new(-10920.125, 624.20275878906, -10266.995117188))
-                            wait(1.1)
-                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk2","Start")
-                        else
-                            if game:GetService("Workspace").AppleSpawner:FindFirstChild("Apple") then
-                                game:GetService("Workspace").AppleSpawner:FindFirstChild("Apple").Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                            end
-                            if game:GetService("Workspace").BananaSpawner:FindFirstChild("Banana") then
-                                game:GetService("Workspace").BananaSpawner:FindFirstChild("Banana").Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                            end
-                            if game:GetService("Workspace").PineappleSpawner:FindFirstChild("Pineapple") then
-                                game:GetService("Workspace").PineappleSpawner:FindFirstChild("Pineapple").Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                            end
-                            if (game:GetService("Players").LocalPlayer.Character:FindFirstChild("Apple") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Apple")) and (game:GetService("Players").LocalPlayer.Character:FindFirstChild("Pineapple") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple")) and (game:GetService("Players").LocalPlayer.Character:FindFirstChild("Banana") or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Banana")) then
-                                Tween2( CFrame.new(-12444.78515625, 332.40396118164, -7673.1806640625)) 
-                                wait(1.1)
-                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CitizenQuestProgress","Citizen")
-                                wait(.5)
-                            end
-                        end
-                    end
-                end
-            end)
-        end
-    end)
 local ToggleAutoRainbowHaki = Tabs.Item:AddToggle("ToggleAutoRainbowHaki", {
     Title="Haki 7 Màu",
     Description="",
@@ -7446,6 +7397,12 @@ spawn(function()
         end
     end
 end)
+local CTRL = Tabs.Player:AddToggle("CTRL", {Title = "Ctrl + Click to TP", Default = true })
+CTRL:OnChanged(function(Value)
+    _G.CTRL = Value
+end)
+Options.CTRL:SetValue(true)
+
 local ToggleNoClip = Tabs.Player:AddToggle("ToggleNoClip", {Title = "Xuyên Tường", Description = "", Default = true })
 
 _G.LOf = true -- Mặc định bật khi chạy script
@@ -7504,19 +7461,19 @@ end)
 spawn(function()
     while wait(0.1) do
         pcall(function()
-                for i, v in pairs(game.Workspace:GetDescendants()) do
-        if v.Name == "Lava" or v.Name == "Magma" or v.Name == "Ice"  then   
-            v:Destroy()
-            count = count + 1
-        end
-    end
-    
-    -- Xoá Lava/Magma trong ReplicatedStorage
-    for i, v in pairs(game.ReplicatedStorage:GetDescendants()) do
-        if v.Name == "Lava" or v.Name == "Magma" or v.Name == "Ice"  then      
-            v:Destroy()
-            count = count + 1
-        end
+            if _G.RemoveLava then
+                -- Duyệt qua tất cả các đối tượng trong workspace
+                for _, v in pairs(workspace:GetDescendants()) do
+                    -- Kiểm tra nếu đối tượng là một BasePart và có tên hoặc đặc điểm nhận diện dung nham
+                    if v:IsA("BasePart") and v.Name == "Lava" then
+                        -- Xóa dung nham khỏi game
+                        v:Destroy()
+                        -- Hoặc vô hiệu hóa va chạm với dung nham thay vì xóa
+                        -- v.CanCollide = false
+                    end
+                end
+            end
+        end)
     end
 end)
 
