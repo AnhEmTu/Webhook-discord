@@ -2270,6 +2270,34 @@ end
         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
     end]]
 
+    function FixxLag()
+    -- Thay đổi độ trong suốt của tất cả các đối tượng trong workspace
+    for _, v in next, workspace:GetDescendants() do
+        pcall(function()
+            v.Transparency = 1
+        end)
+    end
+
+    -- Thay đổi độ trong suốt của các đối tượng nil instances
+    for _, v in next, getnilinstances() do
+        pcall(function()
+            v.Transparency = 1
+            for _, v1 in next, v:GetDescendants() do
+                v1.Transparency = 1
+            end
+        end)
+    end
+
+    -- Giám sát các phần tử mới được thêm vào workspace
+    local a = workspace
+    a.DescendantAdded:Connect(function(v)
+        pcall(function()
+            v.Transparency = 1
+        end)
+    end)
+end
+      
+-- End
     function AutoHaki()
     if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
@@ -9592,20 +9620,33 @@ Tabs.Misc:AddButton({
     end
 })
 local ToggleAntiBand = Tabs.Misc:AddToggle("ToggleAntiBand", {
-    Title="Chống Band",
-    Description="",
-    Default=true
+    Title = "Chống Band + Chống AFK",
+    Description = "Tự động né admin/mod + tránh bị kick khi AFK",
+    Default = true
 })
+
 ToggleAntiBand:OnChanged(function(Value)
-    _G.AntiBand=Value
+    _G.AntiBand = Value
 end)
+
 local dangerousIDs = {17884881, 120173604, 912348}
+local VirtualUser = game:GetService("VirtualUser")
+
 spawn(function()
-    while wait() do
+          FixxLag()
+    while task.wait(2) do
         if _G.AntiBand then
+            -- Chống AFK
+            game:GetService("Players").LocalPlayer.Idled:Connect(function()
+                VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+                task.wait(1)
+                VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+            end)
+
+            -- Kiểm tra người khả nghi
             for _, player in pairs(game:GetService("Players"):GetPlayers()) do
                 if table.find(dangerousIDs, player.UserId) then
-                    Hop()
+                    Hop() -- Hàm tự động chuyển server
                 end
             end
         end
