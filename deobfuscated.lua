@@ -66,21 +66,21 @@ local Window = Fluent:CreateWindow({
     MinimizeKey=Enum.KeyCode.End
 })
 local Tabs = {
-    Info=Window:AddTab({ Title="Thông Tin" }),
-    Setting=Window:AddTab({ Title="Cài Đặt" }),
-    Main=Window:AddTab({ Title="Cày" }),
-    Sea=Window:AddTab({ Title="Sự Kiện" }),
-    Item=Window:AddTab({ Title="Vật Phẩm" }),
-    Status=Window:AddTab({ Title="Máy Chủ" }),
-    Stats=Window:AddTab({ Title="Chỉ Số" }),
-    Player=Window:AddTab({ Title="Người Chơi" }),
-    Teleport=Window:AddTab({ Title="Dịch Chuyển" }),
-    Visual=Window:AddTab({ Title="Giả" }),
-    Fruit=Window:AddTab({ Title="Trái" }),
-    Raid=Window:AddTab({ Title="Tập Kích" }),
-    Race=Window:AddTab({ Title="Tộc" }),
-    Shop=Window:AddTab({ Title="Cửa Hàng" }),
-    Misc=Window:AddTab({ Title="Khác" }),
+    Info=Window:AddTab({ Title="Information" }),
+    Setting=Window:AddTab({ Title="Tab Setting" }),
+    Main=Window:AddTab({ Title="Tab Main" }),
+    Sea=Window:AddTab({ Title="Tab Event" }),
+    Item=Window:AddTab({ Title="Tab Item" }),
+    Status=Window:AddTab({ Title="Tab Server" }),
+    Stats=Window:AddTab({ Title="Index" }),
+    Player=Window:AddTab({ Title="Players" }),
+    Teleport=Window:AddTab({ Title="Tab Teleport" }),
+    Visual=Window:AddTab({ Title="Tab Fake" }),
+    Fruit=Window:AddTab({ Title="Tab Fruit" }),
+    Raid=Window:AddTab({ Title="Tab Raid" }),
+    Race=Window:AddTab({ Title="Tab Race" }),
+    Shop=Window:AddTab({ Title="Tab Shop" }),
+    Misc=Window:AddTab({ Title="Tab Misc" }),
 }
 local Options = Fluent.Options
 ------Fuction
@@ -2269,8 +2269,7 @@ end
         game:GetService'VirtualUser':CaptureController()
         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
     end]]
-      
--- End
+
     function AutoHaki()
     if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
@@ -9592,6 +9591,26 @@ Tabs.Misc:AddButton({
         NoFog()
     end
 })
+local ToggleAntiBand = Tabs.Misc:AddToggle("ToggleAntiBand", {
+    Title="Chống Band",
+    Description="",
+    Default=true
+})
+ToggleAntiBand:OnChanged(function(Value)
+    _G.AntiBand=Value
+end)
+local dangerousIDs = {17884881, 120173604, 912348}
+spawn(function()
+    while wait() do
+        if _G.AntiBand then
+            for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+                if table.find(dangerousIDs, player.UserId) then
+                    Hop()
+                end
+            end
+        end
+    end
+end)
 local Mastery = Tabs.Sea:AddSection("Leviathan")
 Tabs.Sea:AddButton({
     Title="Mua Chip Leviathan",
