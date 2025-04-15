@@ -9592,7 +9592,7 @@ Tabs.Misc:AddButton({
         NoFog()
     end
 })
-llocal ToggleAntiBand = Tabs.Misc:AddToggle("ToggleAntiBand", {
+local ToggleAntiBand = Tabs.Misc:AddToggle("ToggleAntiBand", {
     Title = "Chống Band + Chống AFK",
     Description = "Tự né admin, tránh kick AFK và giảm lag tối đa",
     Default = true
