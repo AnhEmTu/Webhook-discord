@@ -3776,36 +3776,6 @@ spawn(function()
     end
     end)
 end
-local AutoBuyEXPBone = false
-
-local Toggle2xBone = Tabs.Main:AddToggle("Toggle2xBone", {
-    Title = "Random EXP Xương",
-    Description = "",
-    Default = false
-})
-
-Toggle2xBone:OnChanged(function(Value)  
-    AutoBuyEXPBone = Value
-end)
-
-Options.Toggle2xBone:SetValue(false)
-
-spawn(function()
-    local Players = game:GetService("Players")
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local player = Players.LocalPlayer
-    local gui = player:WaitForChild("PlayerGui"):WaitForChild("Main")
-    local level = gui:WaitForChild("Level")
-    local exp = level:WaitForChild("Exp")
-
-    while task.wait(1) do -- wait 1 giây để tránh spam quá nhanh
-        if AutoBuyEXPBone then
-            if not string.find(exp.Text, "2x") then
-                ReplicatedStorage.Remotes.CommF_:InvokeServer("Bones", "Buy", 1, 1)
-            end
-        end
-    end
-end)
 if Sea3 then
 local MiscFarm = Tabs.Main:AddSection("Tư Lệnh Bánh")
 local Mob_Kill_Cake_Prince = Tabs.Main:AddParagraph({
