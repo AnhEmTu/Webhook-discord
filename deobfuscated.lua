@@ -3791,7 +3791,8 @@ spawn(function()
             end
         end
     end)
-end)
+ end)
+end
 if Sea3 then
 local MiscFarm = Tabs.Main:AddSection("Tư Lệnh Bánh")
 local Mob_Kill_Cake_Prince = Tabs.Main:AddParagraph({
