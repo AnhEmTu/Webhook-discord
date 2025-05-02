@@ -36,7 +36,7 @@ local success, err = pcall(function()
 	game.StarterGui:SetCore("SendNotification", {
 		Title = "Tự Động Lụm Chest",
 		Text = "Tìm Chest",
-		Icon = "rbxassetid://11816162894",
+		Icon = "rbxassetid://126213825699259",
 		Duration = math.huge,
 		Callback = bindable,
 		Button1 = "Có",
